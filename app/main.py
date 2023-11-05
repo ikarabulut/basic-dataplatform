@@ -1,7 +1,13 @@
 import psycopg2
+import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Json
+
+
+class Product(BaseModel):
+    table: str
+    json_schema: str
 
 
 class DataProduct(BaseModel):
@@ -35,3 +41,25 @@ async def add_product_to_registry(product: DataProduct):
     conn.commit()
     cur.close()
     return JSONResponse(content=f"{product}")
+
+
+@app.post("/product/create")
+async def create_sql_data_product(product: Product):
+    cur = conn.cursor()
+    cur.execute(build_create_table_query(product))
+    conn.commit()
+    cur.close()
+    return JSONResponse(content=f"{product}")
+
+
+def build_create_table_query(product: Product):
+    schema = json.loads(product.json_schema)
+    keys = list(dict.keys(schema))
+    string_builder = f"CREATE TABLE {product.table} (id SERIAL PRIMARY KEY, "
+    for key in keys:
+        if key == keys[-1]:
+            string_builder += f"{str.upper(key)} {schema[key]})"
+            string_builder += ";"
+        else:
+            string_builder += f"{str.upper(key)} {schema[key]}, "
+    return string_builder
