@@ -10,14 +10,14 @@ ENV PIP_DEFAULT_TIMEOUT=100 \
 RUN pip install "poetry==$POETRY_VERSION"
 RUN python -m venv /venv
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src
 
 COPY pyproject.toml poetry.lock README.md ./
-COPY src ./src
+COPY app ./app
 
 RUN poetry config virtualenvs.in-project true && \
     poetry install --only=main --no-root && \
     poetry build -f wheel
 
 RUN pip install dist/*.whl
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--reload"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--reload"]
