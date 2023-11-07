@@ -7,6 +7,11 @@ services:
       db:
         condition: service_healthy
 
+  frontend:
+    build: ./frontend/data-platform-spa
+    ports:
+      - 5173:5173
+
   db:
     image: postgres
     restart: always
