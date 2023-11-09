@@ -1,4 +1,5 @@
 import psycopg
+from psycopg.rows import class_row
 import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -25,6 +26,20 @@ app = FastAPI()
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
+
+
+@app.get("/registry")
+async def get_all_incidents() -> list[DataProduct]:
+    conn = psycopg.connect(
+        "dbname=postgres user=postgres host=postgres password=example port=5432")
+
+    statement = "SELECT * FROM product_registry"
+    cur = conn.cursor(row_factory=class_row(DataProduct))
+    registry_all = cur.execute(statement).fetchall()
+    cur.close()
+    conn.close()
+
+    return registry_all
 
 
 @app.post("/create/")
