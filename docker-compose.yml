@@ -8,7 +8,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build: ./frontend/data-platform-spa
+    build: ./platform-frontend
     ports:
       - 5173:5173
 
