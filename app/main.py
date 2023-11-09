@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg
 import json
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
@@ -29,11 +29,8 @@ async def root():
 
 @app.post("/create/")
 async def add_product_to_registry(product: DataProduct):
-    conn = psycopg2.connect(database="postgres",
-                            user="postgres",
-                            host="postgres",
-                            password="example",
-                            port=5432)
+    conn = psycopg.connect(
+        "dbname=postgres user=postgres host=postgres password=example port=5432")
     cur = conn.cursor()
     cur.execute(
         f"INSERT INTO product_registry(name, version, primary_contact, database, domain, json_schema) VALUES('{product.name}', {product.version}, '{product.primary_contact}', '{product.database}', '{product.domain}', '{product.json_schema}')")
@@ -46,11 +43,8 @@ async def add_product_to_registry(product: DataProduct):
 
 @app.post("/product/create")
 async def create_sql_data_product(product: Product):
-    conn = psycopg2.connect(database="postgres",
-                            user="postgres",
-                            host="postgres",
-                            password="example",
-                            port=5432)
+    conn = psycopg.connect(
+        "dbname=postgres user=postgres host=postgres password=example port=5432")
     cur = conn.cursor()
     cur.execute(build_create_table_query(product))
     conn.commit()
