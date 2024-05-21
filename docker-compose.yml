@@ -1,16 +1,16 @@
 services:
   api:
-    build: .
+    build: ./platform-api
     ports:
-      - 8000:8000
+      - 8080:8080
     depends_on:
       db:
         condition: service_healthy
 
-  frontend:
-    build: ./platform-frontend
-    ports:
-      - 5173:5173
+#  frontend:
+#    build: ./platform-frontend
+#    ports:
+#      - 5173:5173
 
   db:
     image: postgres
@@ -28,8 +28,3 @@ services:
     ports:
       - 5432:5432
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
