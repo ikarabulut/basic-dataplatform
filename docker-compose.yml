@@ -7,10 +7,10 @@ services:
       db:
         condition: service_healthy
 
-#  frontend:
-#    build: ./platform-frontend
-#    ports:
-#      - 5173:5173
+  frontend:
+    build: frontend
+    ports:
+      - 3000:3000
 
   db:
     image: postgres
