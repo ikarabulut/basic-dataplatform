@@ -1,9 +1,14 @@
 package com.ikarabulut.platformapi.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
-public class CatalogRequest {
+@Table(name = "product_registry")
+public class CatalogDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", updatable = false, nullable = false, insertable = false, unique = true)
+    private Integer id;
     private String name;
     private String version;
     private String primaryContact;
