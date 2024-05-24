@@ -1,7 +1,7 @@
-package com.ikarabulut.platformapi.controllers;
+package com.ikarabulut.platformapi.web.controllers;
 
 import com.ikarabulut.platformapi.common.ResourceNotFoundException;
-import com.ikarabulut.platformapi.models.CatalogDetails;
+import com.ikarabulut.platformapi.common.models.CatalogDetails;
 import com.ikarabulut.platformapi.repository.CatalogRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")

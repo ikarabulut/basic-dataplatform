@@ -1,4 +1,4 @@
-package com.ikarabulut.platformapi.error;
+package com.ikarabulut.platformapi.common.error;
 
 import com.ikarabulut.platformapi.common.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;

@@ -1,4 +1,4 @@
-package com.ikarabulut.platformapi.models;
+package com.ikarabulut.platformapi.common.models;
 
 import jakarta.persistence.*;
 
