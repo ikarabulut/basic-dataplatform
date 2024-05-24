@@ -1,9 +1,13 @@
 package com.ikarabulut.platformapi.models;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 
 @Entity
-public class CatalogRequest {
+@Table(name = "product_registry")
+public class CatalogDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
     private String version;
     private String primaryContact;
@@ -49,5 +53,9 @@ public class CatalogRequest {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
