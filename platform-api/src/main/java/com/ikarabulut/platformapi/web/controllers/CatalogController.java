@@ -37,5 +37,12 @@ public class CatalogController {
 
         return ResponseEntity.ok(item);
     }
+
+    @GetMapping("/catalog/all")
+    public ResponseEntity<Iterable<CatalogDetails>> getAllDataProduct() {
+        var items = this.repository.findAll();
+
+        return ResponseEntity.ok(items);
+    }
 }
 
