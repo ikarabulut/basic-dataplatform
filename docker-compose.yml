@@ -8,7 +8,7 @@ services:
         condition: service_healthy
 
   frontend:
-    build: frontend
+    build: platypus-frontend
     ports:
       - 3000:3000
 
@@ -28,4 +28,3 @@ services:
       - ./data_examples:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
-
