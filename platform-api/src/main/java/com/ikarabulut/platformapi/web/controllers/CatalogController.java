@@ -38,6 +38,7 @@ public class CatalogController {
         return ResponseEntity.ok(item);
     }
 
+    @CrossOrigin
     @GetMapping("/catalog/all")
     public ResponseEntity<Iterable<CatalogDetails>> getAllDataProduct() {
         var items = this.repository.findAll();
