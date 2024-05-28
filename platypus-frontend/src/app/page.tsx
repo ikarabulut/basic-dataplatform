@@ -1,6 +1,7 @@
 'use client'
-
 import React from "react";
+import { useEffect, useState } from "react";
+
 import {
   Navbar,
   NavbarBrand,
@@ -9,11 +10,33 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
 
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell} from "@nextui-org/react";
+import { DataProduct } from "../types/DataProduct"
+import { getAllDataProducts } from "./client/PlatformApiClient";
 
 
 export default function App() {
+  const [dataProducts, setDataProducts] = useState<DataProduct[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await getAllDataProducts()
+        if (data && !dataProducts || data && dataProducts.length !== data.length) {
+          setDataProducts(data)
+        }
+    })();
+  })
+
+  const columns = [
+    { key: 'id', label: 'ID' },
+    { key: 'name', label: 'NAME' },
+    { key: 'version', label: 'VERSION' },
+    { key: 'primaryContact', label: 'PRIMARY CONTACT' },
+    { key: 'database', label: 'DATABASE' },
+    { key: 'domain', label: 'DOMAIN' }
+  ];
+
   return (
     <main className="flex min-h-screen flex-col items-center p-4 bg-white">
       <Navbar>
@@ -51,17 +74,19 @@ export default function App() {
 
       <div className="container">
         <Table>
-          <TableHeader>
-            <TableColumn>NAME</TableColumn>
-            <TableColumn>ROLE</TableColumn>
-            <TableColumn>STATUS</TableColumn>
+          <TableHeader columns={columns}>
+            {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
           </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell>Tony Reichert</TableCell>
-              <TableCell>CEO</TableCell>
-              <TableCell>Active</TableCell>
-            </TableRow>
+          <TableBody items={dataProducts}>
+            {(item) => (
+              <TableRow key={item.id}>
+                {(columnKey) => {
+                  return (
+                    <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                  )
+                }}
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </div> 
