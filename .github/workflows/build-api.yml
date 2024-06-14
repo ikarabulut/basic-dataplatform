@@ -1,29 +1,29 @@
- name: API CI
+name: API CI
 
- on:
-   push:
-     branches: ["main"]
-   pull_request:
-     branches: ["main"]
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
- jobs:
-   build:
-     runs-on: ubuntu-latest
-     defaults:
-       run:
-         working-directory: ./platform-api
+jobs:
+  build:
+    runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: ./platform-api
 
-     steps:
-       - uses: actions/checkout@v4
-       - name: Setup java
-         uses: actions/setup-java@v2
-         with:
-           distribution: 'temurin'
-           java-version: '21'
-           java-package: jdk
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup java
+        uses: actions/setup-java@v2
+        with:
+          distribution: "temurin"
+          java-version: "21"
+          java-package: jdk
 
-       - name: Build app
-         run: mvn clean compile
+      - name: Build app
+        run: mvn clean compile
 
-       - name: Run Tests
-         run: mvn clean test
+      - name: Run Tests
+        run: mvn clean test
